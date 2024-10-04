@@ -23,9 +23,22 @@ public class UncheckedAppTest {
         try {
             controller.request();
         } catch (Exception e) {
-            // 예외 발생 시 스택 트레이스를 로그로 출력
+            // e.printStackTrace();
             log.info("ex", e);
         }
+    }
+
+    public void call() {
+        try {
+            runSQL();
+        } catch (SQLException e) {
+            throw new RuntimeSQLException(e); // 기존 예외(e) 포함
+            // throw new RuntimeSQLException(); //기존 예외(e) 제외
+        }
+    }
+
+    public void runSQL() throws SQLException {
+        throw new SQLException("ex");
     }
 
     // Controller 클래스: Service 호출
